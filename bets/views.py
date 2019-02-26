@@ -2,6 +2,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from .enums import *
 
 from .models import Bet
 
@@ -43,3 +44,14 @@ def create(request):
 
     except KeyError as error:
         return HttpResponse("There was an issue with {}.".format(error))
+
+
+def settle(request, bet_id):
+    bet = get_object_or_404(Bet, pk=bet_id)
+    template = loader.get_template('bets/settle.html')
+    context = {
+        'bet': bet,
+        'result_choices': BetResultChoice,
+        'state_choices': BetStateChoice
+    }
+    return HttpResponse(template.render(context, request))
