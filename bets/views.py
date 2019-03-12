@@ -51,7 +51,7 @@ def settle(request, bet_id):
     template = loader.get_template('bets/settle.html')
     context = {
         'bet': bet,
-        'result_choices': BetResultChoice,
-        'state_choices': BetStateChoice
+        'result_choices': BetResultChoice.__members__,
+        'state_choices': BetStateChoice.__members__
     }
     return HttpResponse(template.render(context, request))

@@ -7,11 +7,11 @@
     <div class="row">
         <div class="col">
             <div class="form-group">
-              {% for result in result_choices %}
-{#                <label for="{{fieldname}}">{{fieldname|title}}</label>#}
-                <input type="radio" class="form-control" name="result" value="{{result}}" />
-{#                <small class="form-text text-muted">Field help text will go here.</small>#}
-
+                <label>Bet Result</label>
+              {% for key, value in result_choices.items %}
+                <div>
+                <input type="radio" name="result_options" value="{{key}}" />{{value}}
+                </div>
               {% endfor %}
             </div>
 {#            <div class="form-group">#}
