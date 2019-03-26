@@ -55,3 +55,18 @@ def settle(request, bet_id):
         'state_choices': BetStateChoice.__members__
     }
     return HttpResponse(template.render(context, request))
+
+
+def resolve(request):
+    try:
+        bet = get_object_or_404(Bet, pk=request.POST['bet_id'])
+        # future add better error messaging for bet update rejection
+        if bet.state == BetStateChoice.C:
+            return HttpResponseRedirect(reverse('detail', args=(bet.id,)))
+        bet.outcome = BetResultChoice[request.POST['outcome']]
+        bet.state = BetStateChoice.C
+        bet.save()
+        return HttpResponseRedirect(reverse('detail', args=(bet.id,)))
+
+    except KeyError as error:
+        return HttpResponse("There was an issue with {}.".format(error))

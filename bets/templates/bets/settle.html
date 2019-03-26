@@ -2,7 +2,33 @@
 {% block title %}Resolve Bet{% endblock %}
 {% block content %}
 <h3>Resolve Bet</h3>
-<form action="{% url 'create' %}" method="POST">
+    <table class="table">
+      <thead>
+          <tr>
+              <th>Description</th>
+              <th>Bettor</th>
+              <th>Opponent</th>
+              <th>Wager</th>
+              <th>Deadline</th>
+              <th>State</th>
+              <th>Outcome</th>
+              <th>Creation Date</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td>{{bet.description}}</td>
+              <td>{{bet.bettor}}</td>
+              <td>{{bet.opponent}}</td>
+              <td>{{bet.wager}}</td>
+              <td>{{bet.deadline | date:'M. j, Y'}}</td>
+              <td>{{bet.state}}</td>
+              <td>{{bet.outcome}}</td>
+              <td>{{bet.created_at | date:'M. j, Y'}}</td>
+          </tr>
+      </tbody>
+  </table>
+<form action="{% url 'resolve' %}" method="POST">
     {% csrf_token %}
     <div class="row">
         <div class="col">
@@ -10,7 +36,7 @@
                 <label>Bet Result</label>
               {% for key, value in result_choices.items %}
                 <div>
-                <input type="radio" name="result_options" value="{{key}}" />{{value}}
+                <input type="radio" name="outcome" value="{{key}}" />{{value}}
                 </div>
               {% endfor %}
             </div>
@@ -21,10 +47,11 @@
 
         </div>
     </div>
+    <input type="hidden" name="bet_id" value="{{bet.id}}" />
     <div class="row">
         <div class="col" >
             <a href="{% url 'index' %}" class="btn btn-warning">Cancel</a>
-            <input type="submit" value="Embetten" class="btn btn-primary" />
+            <input type="submit" value="Enresolven" class="btn btn-primary" />
         </div>
     </div>
 </form>
