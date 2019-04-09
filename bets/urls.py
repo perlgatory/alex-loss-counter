@@ -10,4 +10,6 @@ urlpatterns = [
     # /bets/new
     path('new/', views.new, name='new'),
     path('create/', views.create, name='create'),
+    path('settle/<int:bet_id>/', views.settle, name='settle'),
+    path('resolve/', views.resolve, name='resolve')
 ]
