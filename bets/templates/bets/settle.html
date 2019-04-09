@@ -28,6 +28,7 @@
           </tr>
       </tbody>
   </table>
+{% if settleable_state %}
 <form action="{% url 'resolve' %}" method="POST">
     {% csrf_token %}
     <div class="row">
@@ -55,4 +56,10 @@
         </div>
     </div>
 </form>
+
+{% else %}
+<span> Bet is already {{bet.state}}</span>
+<br>
+<a href="{% url 'index' %}">Return</a>
+{% endif %}
 {% endblock %}
